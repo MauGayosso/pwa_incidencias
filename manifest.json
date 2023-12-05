@@ -4,5 +4,9 @@
     "start_url": "./index.html",
     "display": "standalone",
     "background_color": "#370086",
-    "orientation": "any"
+    "orientation": "any",
+    "icons" : [{
+        "src" : "./images/logo.png",
+        "sizes" : "356x356"
+    }]
 }
