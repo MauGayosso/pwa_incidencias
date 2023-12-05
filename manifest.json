@@ -1,0 +1,8 @@
+{
+    "name": "Levantamiento de Incidencias",
+    "id": "com.incidencias.levantamiento",
+    "start_url": "./index.html",
+    "display": "standalone",
+    "background_color": "#370086",
+    "orientation": "any"
+}
