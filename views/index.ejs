@@ -1,0 +1,53 @@
+<!-- index.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="manifest" href="/manifest.json" />
+  <title></title>
+</head>
+<body>
+  <h1>Coleccion</h1>
+  <a href="/add">Agregar</a>
+  <br>
+  <br>
+  <table border="1">
+    <thead>
+        <tr>
+            <th>Titulo</th>
+            <th>Contrato</th>
+            <th>Fecha</th>
+            <th>Ubicación</th>
+            <th>Reportes</th>
+            <th>Imagen</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% data.forEach(item => { %>
+          <tr>
+            <td><%= item.title %></td>
+            <td><%= item.contract %></td>
+            <td><%= item.date %></td>
+            <td><%= item.location %></td>
+            <td>
+                <% if (Array.isArray(item.reports)) { %>
+                    <% item.reports.forEach(subArray => { %>
+                      
+                        <% subArray.forEach(value => { %>
+                          <label><%= value.time %></label>
+                          <label><%= value.descripction %></label>
+                        <% }); %>
+         
+                    <% }); %>
+                  <% } else { %>
+                    <%= item.reports %>
+                  <% } %>
+            </td>
+            <td><%= item.url_image %></td>
+          </tr>
+        <% }); %>
+      </tbody>
+  </table>
+</body>
+</html>

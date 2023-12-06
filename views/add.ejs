@@ -1,0 +1,159 @@
+<!-- add.ejs -->
+
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Reporte</title>
+
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    />
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  </head>
+
+  <body class="container mt-5">
+    <form method="post" id="form1">
+      <a href="/" class="btn btn-primary">Regresar</a>
+      <br>
+      <br>
+      <div class="form-group">
+        <label for="titulo">Titulo</label>
+        <input
+          type="text"
+          class="form-control"
+          name="titulo"
+          id="titulo"
+          placeholder="Titulo"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="contrato">Contrato</label>
+        <input
+          type="text"
+          class="form-control"
+          name="contrato"
+          id="contrato"
+          placeholder="Contrato"
+          rows="5"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="fecha">Fecha</label>
+        <input
+          type="date"
+          class="form-control"
+          name="fecha"
+          id="fecha"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="ubicacion">Ubicación</label>
+        <input
+          type="text"
+          class="form-control"
+          name="ubicacion"
+          id="ubicacion"
+          required
+        />
+      </div>
+
+      <table id="tabla">
+        <thead>
+          <tr>
+            <th>Hora</th>
+            <th>Descripción</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <input type="time" class="form-control" name="hora[]" required />
+            </td>
+            <td>
+              <textarea
+                class="form-control"
+                name="descripcion[]"
+                required
+              ></textarea>
+            </td>
+            <td>
+              <button
+                type="button"
+                class="btn btn-primary"
+                onclick="deleteTR(this)"
+              >
+                Eliminar
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <button type="button" class="btn btn-primary" onclick="addTR()">+</button>
+      <script>
+        function addTR() {
+          var table = document
+            .getElementById("tabla")
+            .getElementsByTagName("tbody")[0];
+
+          var newTR = table.insertRow(table.rows.length);
+          var tdHora = newTR.insertCell(0);
+          var tdDescripcion = newTR.insertCell(1);
+          var tdDelete = newTR.insertCell(2);
+
+          tdHora.innerHTML =
+            '<input type="time" class="form-control" name="hora[]" required>';
+          tdDescripcion.innerHTML =
+            '<textarea class="form-control" name="descripcion[]" required></textarea>';
+          tdDelete.innerHTML =
+            '<button type="button" class="btn btn-primary" onclick="deleteTR(this)">Eliminar</button>';
+        }
+
+        function deleteTR(boton) {
+          var row = boton.parentNode.parentNode;
+          row.parentNode.removeChild(row);
+        }
+      </script>
+      <br /><br />
+      <div class="form-group">
+        <label for="imagen">Adjuntar Imagen</label>
+        <input
+          type="file"
+          class="form-control-file"
+          name="imagen"
+          id="imagen"
+          accept="image/*"
+        />
+      </div>
+
+      <button type="submit" class="btn btn-primary" onclick="saveReport()">Guardar</button>
+    </form>
+    <script>
+        function saveReport() {
+        var formData = new FormData(document.getElementById('form1'));
+        fetch('/save', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.text())
+      .then(message => {
+        console.log(message);
+      })
+      .catch(error => {
+        console.error(error);
+      });}
+    </script>
+  </body>
+</html>
