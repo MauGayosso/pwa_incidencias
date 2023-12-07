@@ -5,14 +5,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="manifest" href="/manifest.json" />
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
   <title></title>
 </head>
-<body>
-  <h1>Coleccion</h1>
-  <a href="/add">Agregar</a>
+<body class="container">
+  <h1 class="mt-5" >Consulta</h1>
+  <a href="/add" class="btn btn-primary mb-3">Agregar</a>
   <br>
   <br>
-  <table border="1">
+  <table class="table table-bordered">
     <thead>
         <tr>
             <th>Titulo</th>
@@ -31,23 +33,30 @@
             <td><%= item.date %></td>
             <td><%= item.location %></td>
             <td>
-                <% if (Array.isArray(item.reports)) { %>
-                    <% item.reports.forEach(subArray => { %>
-                      
-                        <% subArray.forEach(value => { %>
-                          <label><%= value.time %></label>
-                          <label><%= value.descripction %></label>
-                        <% }); %>
-         
+              <% if (Array.isArray(item.reports)) { %>
+                <% item.reports.forEach(subArray => { %>
+              
+                  <% if (Array.isArray(subArray)) { %>
+                    <% subArray.forEach(value => { %>
+                      <label><%= value.time %></label>
+                      <label><%= value.description %></label><br>
                     <% }); %>
                   <% } else { %>
-                    <%= item.reports %>
+                    <%= subArray.time %></label>
+                    <label><%= subArray.description %></label><br>
                   <% } %>
+                <% }); %>
+              <% } else { %>
+                <%= item.reports %>
+              <% } %>
             </td>
-            <td><%= item.url_image %></td>
+            <td><img src="<%= item.url_image %>" height="200" width="300" class="img-fluid"></td>
           </tr>
         <% }); %>
       </tbody>
   </table>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIEXczl4Uq0G2ea2bsHgQ1RPZ3E6648bN5v9LdOL+jufLQp8abtTE1PI" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8sh+WyO8BA/CmUApEUKLHb3F2iiDyJbFea9Mk4" crossorigin="anonymous"></script>
 </body>
 </html>
