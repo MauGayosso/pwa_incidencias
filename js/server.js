@@ -46,102 +46,39 @@ app.get('/manifest.json', (req, res) => {
 });
 
 app.use('/images', express.static(path.join(__dirname, 'public', 'images')));
-/*
-async function run() {
-  try{
-    await client.connect();
-    const db = client.db('incidencias');
-    const collection = db.collection('reportes');
-
-    let reportDocument = {
-      title: req.body.title,
-      contract : req.body.contract,
-      date: req.body.date,
-      location: req.body.location,
-      reports : req.body.hora.map((hora, i) => ({
-        hora,
-        description: req.body.descripcion[i],
-      })),
-      image: req.body.image,
-    }
-    const p = await collection.insertOne(reportDocument);
-    }
-    catch (e) {
-      console.error(e);
-    }
-    finally {
-      await client.close();
-  }
-}
-*/
-/*
-const Schema = mongoose.Schema;
-
-const reportSchema = new Schema({
-  title: String,
-  contract: String,
-  date: Date,
-  location: String,
-  reports: [{
-    time : String,
-    description: String,
-  }],
-  url_image: String,
-});
-
-
-app.post('/save', async (req, res) => {
-  try{
-    const newReport = new reportSchema({
-      title: req.body.title,
-      contract : req.body.contract,
-      date: req.body.date,
-      location: req.body.location,
-      reports : [{}],
-      url_image: req.body.image,
-    });
-    for (let i = 0; i < req.body.hora.length; i++) {
-      newReport.reports.push({
-        time: req.body.hora[i],
-        description: req.body.descripcion[i],
-      });
-    }
-    await newReport.save();}
-  
-    catch (e){
-      console.error(e);
-    }
-    finally {
-      await client.close();
-    }
-  });*/
 
 app.post('/save', async (req, res) => {
   try {
+    await client.connect();
+    const db = client.db('incidencias');
+    const collection = db.collection('reportes');
+    var temp = req.body.titulo;
+    console.log('title: ' + temp);
     const newReport = {
-      title: req.body.title,
-      contract: req.body.contract,
-      date: req.body.date,
-      location: req.body.location,
+      title: req.body.titulo,
+      contract: req.body.contrato,
+      date: req.body.fecha,
+      location: req.body.ubicacion,
       reports: [{
         time: req.body.hora[0].toString(),
         description: req.body.descripcion[0],
       }],
-      url_image: req.body.image,
+      url_image: req.body.imagen,
     }
-    /*for (let i = 0; i < req.body.hora.; i++) {
+    for (let i = 0; i < req.body.hora; i++) {
       newReport.reports.push({
         time: req.body.hora[i],
         description: req.body.descripcion[i],
-      });*/
-     await collection.insertOne(newReport);
+      });
+    await collection.insertOne(newReport);
      console.log("Documento" + newReport);
-    }
+     res.redirect('/');
+    }}
   catch (e) {
     console.error(e);
   }
   finally {
-    await client.close();
+    //await client.close();
   }
 });
 
